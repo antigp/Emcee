@@ -47,7 +47,9 @@ public final class DefaultSimulatorControllerProvider: SimulatorControllerProvid
             )
         case .simctl:
             simulatorStateMachineActionExecutor = SimctlBasedSimulatorStateMachineActionExecutor(
-                simulatorSetPath: AbsolutePath.home.appending(relativePath: RelativePath("Library/Developer/CoreSimulator/Devices"))
+                simulatorSetPath: AbsolutePath.home.appending(relativePath: RelativePath("Library/Developer/CoreSimulator/Devices")),
+                resourceLocationResolver: resourceLocationResolver,
+                simulatorSettings: simulatorSettings
             )
         }
         

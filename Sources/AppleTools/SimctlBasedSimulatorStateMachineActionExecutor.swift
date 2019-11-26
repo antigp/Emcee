@@ -11,9 +11,15 @@ import SimulatorPool
 public final class SimctlBasedSimulatorStateMachineActionExecutor: SimulatorStateMachineActionExecutor, CustomStringConvertible {
 
     private let simulatorSetPath: AbsolutePath
+    private let resourceLocationResolver: ResourceLocationResolver
+    private let simulatorSettings: SimulatorSettings
 
-    public init(simulatorSetPath: AbsolutePath) {
+    public init(simulatorSetPath: AbsolutePath,
+                resourceLocationResolver: ResourceLocationResolver,
+                simulatorSettings: SimulatorSettings) {
         self.simulatorSetPath = simulatorSetPath
+        self.resourceLocationResolver = resourceLocationResolver
+        self.simulatorSettings = simulatorSettings
     }
     
     public var description: String {
@@ -68,13 +74,14 @@ public final class SimctlBasedSimulatorStateMachineActionExecutor: SimulatorStat
                         resourceLocationResolver.resolvable(withRepresentable: preBootGlobalPreference).asArgument(),
                         "\(path.removingLastComponent)/\(simulatorUuid.value)/data/Library/Preferences/.GlobalPreferences.plist"
                     ],
-                    environment: environment
+                    environment: environment,
+                    silenceBehavior: SilenceBehavior(
+                        automaticAction: .interruptAndForceKill,
+                        allowedSilenceDuration: timeout
+                    )
                 )
             )
-            try waitForFbsimctlToBootSimulator(
-                processController: processController,
-                timeout: timeout
-            )
+            processController.startAndListenUntilProcessDies()
         }
     }
     
