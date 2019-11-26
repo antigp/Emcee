@@ -84,10 +84,7 @@ public final class FbsimctlBasedSimulatorStateMachineActionExecutor: SimulatorSt
                     environment: environment
                 )
             )
-            try waitForFbsimctlToBootSimulator(
-                processController: processController,
-                timeout: timeout
-            )
+            processController.startAndListenUntilProcessDies()
         }
     }
     
