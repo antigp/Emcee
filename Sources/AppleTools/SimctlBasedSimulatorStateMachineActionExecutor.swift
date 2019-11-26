@@ -70,7 +70,7 @@ public final class SimctlBasedSimulatorStateMachineActionExecutor: SimulatorStat
             let processController = try DefaultProcessController(
                 subprocess: Subprocess(
                     arguments: [
-                        "cp",
+                        "/bin/cp",
                         resourceLocationResolver.resolvable(withRepresentable: preBootGlobalPreference).asArgument(),
                         "\(path.removingLastComponent)/\(simulatorUuid.value)/data/Library/Preferences/.GlobalPreferences.plist"
                     ],

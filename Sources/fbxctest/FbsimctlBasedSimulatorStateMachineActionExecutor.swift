@@ -77,9 +77,9 @@ public final class FbsimctlBasedSimulatorStateMachineActionExecutor: SimulatorSt
             let processController = try DefaultProcessController(
                 subprocess: Subprocess(
                     arguments: [
-                        "cp",
+                        "/bin/cp",
                         resourceLocationResolver.resolvable(withRepresentable: preBootGlobalPreference).asArgument(),
-                        "\(path.removingLastComponent)/\(simulatorUuid.value)/"
+                        "\(path.removingLastComponent)/\(simulatorUuid.value)/data/Library/Preferences/.GlobalPreferences.plist"
                     ],
                     environment: environment
                 )
