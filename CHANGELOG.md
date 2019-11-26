@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2019-11-22
+- Configure 
 ## 2019-11-14
 
 - Emcee will try to clean up dead simulator cache before executing tests by deleting `simulator_folder/data/Library/Caches/com.apple.containermanagerd/Dead` folder.

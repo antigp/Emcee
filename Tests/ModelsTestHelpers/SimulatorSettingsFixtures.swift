@@ -4,6 +4,7 @@ import Models
 public final class SimulatorSettingsFixtures {
     var simulatorLocalizationSettings: SimulatorLocalizationLocation?
     var watchdogSettings: WatchdogSettingsLocation?
+    var preBootGlobalPreference: PreBootGlobalPreferenceLocation?
     
     public init() {}
     
@@ -16,11 +17,17 @@ public final class SimulatorSettingsFixtures {
         self.watchdogSettings = watchdogSettings
         return self
     }
+
+    public func with(preBootGlobalPreference: PreBootGlobalPreferenceLocation?) -> SimulatorSettingsFixtures {
+          self.preBootGlobalPreference = preBootGlobalPreference
+          return self
+      }
     
     public func simulatorSettings() -> SimulatorSettings {
         return SimulatorSettings(
             simulatorLocalizationSettings: simulatorLocalizationSettings,
-            watchdogSettings: watchdogSettings
+            watchdogSettings: watchdogSettings,
+            preBootGlobalPreference: preBootGlobalPreference
         )
     }
 }

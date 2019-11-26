@@ -12,15 +12,18 @@ public class OnDemandSimulatorPool {
         public let developerDir: DeveloperDir
         public let testDestination: TestDestination
         public let simulatorControlTool: SimulatorControlTool
-        
+        public let simulatorSettings: SimulatorSettings
+
         public init(
             developerDir: DeveloperDir,
             testDestination: TestDestination,
-            simulatorControlTool: SimulatorControlTool
+            simulatorControlTool: SimulatorControlTool,
+            simulatorSettings: SimulatorSettings
         ) {
             self.developerDir = developerDir
             self.testDestination = testDestination
             self.simulatorControlTool = simulatorControlTool
+            self.simulatorSettings = simulatorSettings
         }
         
         public var description: String {
@@ -73,6 +76,7 @@ public class OnDemandSimulatorPool {
                     developerDir: key.developerDir,
                     developerDirLocator: developerDirLocator,
                     simulatorControlTool: key.simulatorControlTool,
+                    simulatorSettings: key.simulatorSettings,
                     simulatorControllerProvider: simulatorControllerProvider,
                     tempFolder: tempFolder,
                     testDestination: key.testDestination

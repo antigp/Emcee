@@ -118,7 +118,7 @@ public final class RuntimeTestQuerierImpl: RuntimeTestQuerier {
         dumpConfiguration: RuntimeDumpConfiguration,
         runtimeEntriesJSONPath: AbsolutePath
     ) -> RunnerConfiguration {
-        let simulatorSettings = SimulatorSettings(simulatorLocalizationSettings: nil, watchdogSettings: nil)
+        let simulatorSettings = SimulatorSettings(simulatorLocalizationSettings: nil, watchdogSettings: nil, preBootGlobalPreference: nil)
         let environment = self.environment(configuration: dumpConfiguration, runtimeEntriesJSONPath: runtimeEntriesJSONPath)
 
         switch dumpConfiguration.runtimeDumpMode {
@@ -172,7 +172,8 @@ public final class RuntimeTestQuerierImpl: RuntimeTestQuerier {
             key: OnDemandSimulatorPool.Key(
                 developerDir: configuration.developerDir,
                 testDestination: configuration.testDestination,
-                simulatorControlTool: simulatorControlTool
+                simulatorControlTool: simulatorControlTool,
+                simulatorSettings: SimulatorSettings(simulatorLocalizationSettings: nil, watchdogSettings: nil, preBootGlobalPreference: nil)
             )
         )
         return try simulatorPool.allocateSimulator()

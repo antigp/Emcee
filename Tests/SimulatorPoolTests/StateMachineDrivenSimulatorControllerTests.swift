@@ -180,6 +180,7 @@ final class StateMachineDrivenSimulatorControllerTests: XCTestCase {
         shutdown: @escaping () throws -> () = {},
         timeouts: SimulatorOperationTimeouts = SimulatorOperationTimeouts(
             create: .infinity,
+            preBootConfigure: .infinity,
             boot: .infinity,
             delete: .infinity,
             shutdown: .infinity
@@ -225,12 +226,14 @@ final class StateMachineDrivenSimulatorControllerTests: XCTestCase {
     
     private func createTimeouts(
         create: TimeInterval = .infinity,
+        preBootConfigure: TimeInterval = .infinity,
         boot: TimeInterval = .infinity,
         delete: TimeInterval = .infinity,
         shutdown: TimeInterval = .infinity
     ) -> SimulatorOperationTimeouts {
         return SimulatorOperationTimeouts(
             create: create,
+            preBootConfigure: preBootConfigure,
             boot: boot,
             delete: delete,
             shutdown: shutdown

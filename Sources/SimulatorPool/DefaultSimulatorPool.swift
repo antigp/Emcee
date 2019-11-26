@@ -16,6 +16,7 @@ public final class DefaultSimulatorPool: SimulatorPool, CustomStringConvertible 
     private let developerDir: DeveloperDir
     private let developerDirLocator: DeveloperDirLocator
     private let simulatorControlTool: SimulatorControlTool
+    private let simulatorSettings: SimulatorSettings
     private let simulatorControllerProvider: SimulatorControllerProvider
     private let tempFolder: TemporaryFolder
     private let testDestination: TestDestination
@@ -30,6 +31,7 @@ public final class DefaultSimulatorPool: SimulatorPool, CustomStringConvertible 
         developerDir: DeveloperDir,
         developerDirLocator: DeveloperDirLocator,
         simulatorControlTool: SimulatorControlTool,
+        simulatorSettings: SimulatorSettings,
         simulatorControllerProvider: SimulatorControllerProvider,
         tempFolder: TemporaryFolder,
         testDestination: TestDestination
@@ -40,6 +42,7 @@ public final class DefaultSimulatorPool: SimulatorPool, CustomStringConvertible 
         self.simulatorControllerProvider = simulatorControllerProvider
         self.tempFolder = tempFolder
         self.testDestination = testDestination
+        self.simulatorSettings = simulatorSettings
     }
     
     deinit {
@@ -56,6 +59,7 @@ public final class DefaultSimulatorPool: SimulatorPool, CustomStringConvertible 
                 developerDir: developerDir,
                 developerDirLocator: developerDirLocator,
                 simulatorControlTool: simulatorControlTool,
+                simulatorSettings: simulatorSettings,
                 testDestination: testDestination
             )
             Logger.verboseDebug("Allocated new simulator: \(controller)")

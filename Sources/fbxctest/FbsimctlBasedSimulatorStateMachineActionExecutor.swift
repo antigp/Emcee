@@ -11,13 +11,19 @@ public final class FbsimctlBasedSimulatorStateMachineActionExecutor: SimulatorSt
     private let fbsimctl: ResolvableResourceLocation
     private let simulatorsContainerPath: AbsolutePath
     private var simulatorKeepAliveProcessController: ProcessController?
+    private let resourceLocationResolver: ResourceLocationResolver
+    private let simulatorSettings: SimulatorSettings
 
     public init(
         fbsimctl: ResolvableResourceLocation,
-        simulatorsContainerPath: AbsolutePath
+        simulatorsContainerPath: AbsolutePath,
+        resourceLocationResolver: ResourceLocationResolver,
+        simulatorSettings: SimulatorSettings
     ) {
         self.fbsimctl = fbsimctl
         self.simulatorsContainerPath = simulatorsContainerPath
+        self.resourceLocationResolver = resourceLocationResolver
+        self.simulatorSettings = simulatorSettings
     }
 
     public func performCreateSimulatorAction(
@@ -59,6 +65,30 @@ public final class FbsimctlBasedSimulatorStateMachineActionExecutor: SimulatorSt
             udid: createEndedEvent.subject.udid,
             path: simulatorPath
         )
+    }
+
+    public func performPreBootConfigureSimulatorAction(
+        environment: [String : String],
+        path: AbsolutePath,
+        simulatorUuid: UDID,
+        timeout: TimeInterval
+    ) throws {
+        if let preBootGlobalPreference = simulatorSettings.preBootGlobalPreference {
+            let processController = try DefaultProcessController(
+                subprocess: Subprocess(
+                    arguments: [
+                        "cp",
+                        resourceLocationResolver.resolvable(withRepresentable: preBootGlobalPreference).asArgument(),
+                        "\(path.removingLastComponent)/\(simulatorUuid.value)/"
+                    ],
+                    environment: environment
+                )
+            )
+            try waitForFbsimctlToBootSimulator(
+                processController: processController,
+                timeout: timeout
+            )
+        }
     }
     
     public func performBootSimulatorAction(

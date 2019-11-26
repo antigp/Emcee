@@ -26,6 +26,7 @@ class DefaultSimulatorPoolTests: XCTestCase {
             developerDir: DeveloperDir.current,
             developerDirLocator: developerDirLocator,
             simulatorControlTool: SimulatorControlToolFixtures.fakeFbsimctlTool,
+            simulatorSettings: SimulatorSettings(simulatorLocalizationSettings: nil, watchdogSettings: nil, preBootGlobalPreference: nil),
             simulatorControllerProvider: simulatorControllerProvider,
             tempFolder: tempFolder,
             testDestination: TestDestinationFixtures.testDestination

@@ -7,6 +7,7 @@ public protocol SimulatorControllerProvider {
         developerDir: DeveloperDir,
         developerDirLocator: DeveloperDirLocator,
         simulatorControlTool: SimulatorControlTool,
+        simulatorSettings: SimulatorSettings,
         testDestination: TestDestination
     ) throws -> SimulatorController
 }

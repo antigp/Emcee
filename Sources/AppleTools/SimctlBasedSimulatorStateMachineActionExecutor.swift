@@ -53,6 +53,30 @@ public final class SimctlBasedSimulatorStateMachineActionExecutor: SimulatorStat
             udid: udid,
             path: simulatorSetPath.appending(component: udid.value))
     }
+
+    public func performPreBootConfigureSimulatorAction(
+        environment: [String : String],
+        path: AbsolutePath,
+        simulatorUuid: UDID,
+        timeout: TimeInterval
+    ) throws {
+        if let preBootGlobalPreference = simulatorSettings.preBootGlobalPreference {
+            let processController = try DefaultProcessController(
+                subprocess: Subprocess(
+                    arguments: [
+                        "cp",
+                        resourceLocationResolver.resolvable(withRepresentable: preBootGlobalPreference).asArgument(),
+                        "\(path.removingLastComponent)/\(simulatorUuid.value)/data/Library/Preferences/.GlobalPreferences.plist"
+                    ],
+                    environment: environment
+                )
+            )
+            try waitForFbsimctlToBootSimulator(
+                processController: processController,
+                timeout: timeout
+            )
+        }
+    }
     
     public func performBootSimulatorAction(
         environment: [String: String],
