@@ -81,7 +81,11 @@ public final class FbsimctlBasedSimulatorStateMachineActionExecutor: SimulatorSt
                         resourceLocationResolver.resolvable(withRepresentable: preBootGlobalPreference).asArgument(),
                         "\(path.removingLastComponent)/\(simulatorUuid.value)/data/Library/Preferences/.GlobalPreferences.plist"
                     ],
-                    environment: environment
+                    environment: environment,
+                    silenceBehavior: SilenceBehavior(
+                                           automaticAction: .interruptAndForceKill,
+                                           allowedSilenceDuration: timeout
+                                       )
                 )
             )
             processController.startAndListenUntilProcessDies()
