@@ -96,7 +96,7 @@ final class StateMachineDrivenSimulatorControllerTests: XCTestCase {
                 boot: validateArguments
             ),
             developerDirLocator: FakeDeveloperDirLocator(result: expectedDeveloperDirPath),
-            timeouts: createTimeouts(boot: expectedTimeout)
+            timeouts: createTimeouts(preBootConfigure: expectedTimeout, boot: expectedTimeout)
         )
         assertDoesNotThrow {
             _ = try controller.bootedSimulator()
