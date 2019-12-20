@@ -58,11 +58,11 @@ final class GroupedTestEntryConfigurationsTests: XCTestCase {
         let testEntryConfigurations1 = TestEntryConfigurationFixtures()
             .add(testEntry: TestEntryFixtures.testEntry(className: "class", methodName: "test1"))
             .add(testEntry: TestEntryFixtures.testEntry(className: "class", methodName: "test2"))
-            .with(simulatorSettings: SimulatorSettings(simulatorLocalizationSettings: nil, watchdogSettings: nil))
+            .with(simulatorSettings: SimulatorSettings(simulatorLocalizationSettings: nil, watchdogSettings: nil, preBootGlobalPreference: nil))
             .testEntryConfigurations()
         let testEntryConfigurations2 = TestEntryConfigurationFixtures()
             .add(testEntry: TestEntryFixtures.testEntry(className: "class", methodName: "test3"))
-            .with(simulatorSettings: SimulatorSettings(simulatorLocalizationSettings: SimulatorLocalizationLocation(.localFilePath("/l10n")), watchdogSettings: nil))
+            .with(simulatorSettings: SimulatorSettings(simulatorLocalizationSettings: SimulatorLocalizationLocation(.localFilePath("/l10n")), watchdogSettings: nil, preBootGlobalPreference: nil))
             .testEntryConfigurations()
         let mixedTestEntryConfigurations = [
             testEntryConfigurations1[0],

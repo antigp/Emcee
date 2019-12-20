@@ -55,7 +55,8 @@ final class TestArgFileTests: XCTestCase {
                 scheduleStrategy: .unsplit,
                 simulatorSettings: SimulatorSettings(
                     simulatorLocalizationSettings: SimulatorLocalizationLocation(.localFilePath("/l10n")),
-                    watchdogSettings: WatchdogSettingsLocation(.localFilePath("/wd"))
+                    watchdogSettings: WatchdogSettingsLocation(.localFilePath("/wd")),
+                    preBootGlobalPreference: nil
                 ),
                 testDestination: try TestDestination(deviceType: "iPhone SE", runtime: "11.3"),
                 testTimeoutConfiguration: TestTimeoutConfiguration(
