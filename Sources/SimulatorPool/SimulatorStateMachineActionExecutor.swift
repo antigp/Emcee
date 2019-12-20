@@ -8,6 +8,13 @@ public protocol SimulatorStateMachineActionExecutor {
         testDestination: TestDestination,
         timeout: TimeInterval
     ) throws -> Simulator
+
+    func performPreBootConfigureSimulatorAction(
+        environment: [String : String],
+        path: AbsolutePath,
+        simulatorUuid: UDID,
+        timeout: TimeInterval
+    ) throws
     
     func performBootSimulatorAction(
         environment: [String: String],

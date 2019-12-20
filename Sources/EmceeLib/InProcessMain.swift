@@ -19,7 +19,7 @@ public final class InProcessMain {
     public init() {}
     
     public func run() throws {
-        try! LoggingSetup.setupLogging(stderrVerbosity: Verbosity.info)
+        try! LoggingSetup.setupLogging(stderrVerbosity: Verbosity.debug)
         defer { LoggingSetup.tearDown() }
         
         Logger.info("Arguments: \(ProcessInfo.processInfo.arguments)")

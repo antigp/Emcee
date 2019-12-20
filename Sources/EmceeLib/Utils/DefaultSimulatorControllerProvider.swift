@@ -31,6 +31,7 @@ public final class DefaultSimulatorControllerProvider: SimulatorControllerProvid
         developerDir: DeveloperDir,
         developerDirLocator: DeveloperDirLocator,
         simulatorControlTool: SimulatorControlTool,
+        simulatorSettings: SimulatorSettings,
         testDestination: TestDestination
     ) throws -> SimulatorController {
         let simulatorStateMachineActionExecutor: SimulatorStateMachineActionExecutor
@@ -40,11 +41,15 @@ public final class DefaultSimulatorControllerProvider: SimulatorControllerProvid
                 fbsimctl: resourceLocationResolver.resolvable(withRepresentable: fbsimctlLocation),
                 simulatorsContainerPath: try temporaryFolder.pathByCreatingDirectories(
                     components: ["fbsimctl_simulators", UUID().uuidString]
-                )
+                ),
+                resourceLocationResolver: resourceLocationResolver,
+                simulatorSettings: simulatorSettings
             )
         case .simctl:
             simulatorStateMachineActionExecutor = SimctlBasedSimulatorStateMachineActionExecutor(
-                simulatorSetPath: AbsolutePath.home.appending(relativePath: RelativePath("Library/Developer/CoreSimulator/Devices"))
+                simulatorSetPath: AbsolutePath.home.appending(relativePath: RelativePath("Library/Developer/CoreSimulator/Devices")),
+                resourceLocationResolver: resourceLocationResolver,
+                simulatorSettings: simulatorSettings
             )
         }
         
@@ -55,6 +60,7 @@ public final class DefaultSimulatorControllerProvider: SimulatorControllerProvid
             developerDirLocator: developerDirLocator,
             simulatorOperationTimeouts: SimulatorOperationTimeouts(
                 create: 30,
+                preBootConfigure: 30,
                 boot: 180,
                 delete: 20,
                 shutdown: 20

@@ -11,9 +11,15 @@ import SimulatorPool
 public final class SimctlBasedSimulatorStateMachineActionExecutor: SimulatorStateMachineActionExecutor, CustomStringConvertible {
 
     private let simulatorSetPath: AbsolutePath
+    private let resourceLocationResolver: ResourceLocationResolver
+    private let simulatorSettings: SimulatorSettings
 
-    public init(simulatorSetPath: AbsolutePath) {
+    public init(simulatorSetPath: AbsolutePath,
+                resourceLocationResolver: ResourceLocationResolver,
+                simulatorSettings: SimulatorSettings) {
         self.simulatorSetPath = simulatorSetPath
+        self.resourceLocationResolver = resourceLocationResolver
+        self.simulatorSettings = simulatorSettings
     }
     
     public var description: String {
@@ -52,6 +58,31 @@ public final class SimctlBasedSimulatorStateMachineActionExecutor: SimulatorStat
             testDestination: testDestination,
             udid: udid,
             path: simulatorSetPath.appending(component: udid.value))
+    }
+
+    public func performPreBootConfigureSimulatorAction(
+        environment: [String : String],
+        path: AbsolutePath,
+        simulatorUuid: UDID,
+        timeout: TimeInterval
+    ) throws {
+        if let preBootGlobalPreference = simulatorSettings.preBootGlobalPreference {
+            let processController = try DefaultProcessController(
+                subprocess: Subprocess(
+                    arguments: [
+                        "/bin/cp",
+                        resourceLocationResolver.resolvable(withRepresentable: preBootGlobalPreference).asArgument(),
+                        "\(path.removingLastComponent)/\(simulatorUuid.value)/data/Library/Preferences/.GlobalPreferences.plist"
+                    ],
+                    environment: environment,
+                    silenceBehavior: SilenceBehavior(
+                        automaticAction: .interruptAndForceKill,
+                        allowedSilenceDuration: timeout
+                    )
+                )
+            )
+            processController.startAndListenUntilProcessDies()
+        }
     }
     
     public func performBootSimulatorAction(

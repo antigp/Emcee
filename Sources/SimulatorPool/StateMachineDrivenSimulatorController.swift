@@ -107,9 +107,17 @@ public final class StateMachineDrivenSimulatorController: SimulatorController {
     }
     
     private func boot(simulator: Simulator) throws {
-        Logger.verboseDebug("Booting simulator: \(simulator)")
-        
+        let performConfigure = {
+            Logger.verboseDebug("PreBoot Configure: \(simulator)")
+            try self.simulatorStateMachineActionExecutor.performPreBootConfigureSimulatorAction(
+                environment: try self.environment(),
+                path: simulator.path,
+                simulatorUuid: simulator.udid,
+                timeout: self.simulatorOperationTimeouts.preBootConfigure)
+        }
+
         let performBoot = {
+            Logger.verboseDebug("Booting simulator: \(simulator)")
             try self.simulatorStateMachineActionExecutor.performBootSimulatorAction(
                 environment: try self.environment(),
                 path: simulator.path,
@@ -122,6 +130,7 @@ public final class StateMachineDrivenSimulatorController: SimulatorController {
             var bootAttempt = 0
             while true {
                 do {
+                    try performConfigure()
                     try performBoot()
                     Logger.debug("Booted simulator \(simulator) using #\(bootAttempt + 1) attempts")
                     break

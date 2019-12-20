@@ -11,6 +11,7 @@ public typealias FbxctestLocation = TypedResourceLocation<FbxctestResourceLocati
 public typealias PluginLocation = TypedResourceLocation<PluginResourceLocationType>
 public typealias RunnerAppLocation = TypedResourceLocation<RunnerAppResourceLocationType>
 public typealias SimulatorLocalizationLocation = TypedResourceLocation<SimulatorLocalizationResourceLocationType>
+public typealias PreBootGlobalPreferenceLocation = TypedResourceLocation<PreBootGlobalPreferenceLocationType>
 public typealias TestBundleLocation = TypedResourceLocation<TestBundleResourceLocationType>
 public typealias WatchdogSettingsLocation = TypedResourceLocation<WatchdogResourceLocationType>
 public typealias QueueServerRunConfigurationLocation = TypedResourceLocation<QueueServerRunConfigurationLocationType>
@@ -43,6 +44,10 @@ public final class RunnerAppResourceLocationType: ResourceLocationType {
 
 public final class SimulatorLocalizationResourceLocationType: ResourceLocationType {
     public static let name = "simulator localization settings"
+}
+
+public final class PreBootGlobalPreferenceLocationType: ResourceLocationType {
+    public static let name = "pre boot .GlobalPreferences.plist"
 }
 
 public final class TestBundleResourceLocationType: ResourceLocationType {

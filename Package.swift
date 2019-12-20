@@ -87,6 +87,8 @@ let package = Package(
                 "ResourceLocationResolverTestHelpers",
                 "RunnerTestHelpers",
                 "TemporaryStuff",
+                "Metrics",
+                "TestHelpers",
             ]
         ),
         .target(
